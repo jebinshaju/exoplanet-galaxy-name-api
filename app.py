@@ -39,35 +39,28 @@ def extract_exoplanet_details(exoplanet_name):
 
     return exoplanet_info
 
-def get_galaxy_details(galaxy_name):
-    url = "https://images-api.nasa.gov/search"
-    params = {
-        "q": galaxy_name,
-        "media_type": "image",
-    }
+# def get_galaxy_details(galaxy_name):
+#     url = "https://images-api.nasa.gov/search"
+#     params = {
+#         "q": galaxy_name,
+#         "media_type": "image",
+#     }
 
-    response = requests.get(url, params=params)
-    data = response.json()
+#     response = requests.get(url, params=params)
+#     data = response.json()
 
-    galaxies = []
-    for item in data["collection"]["items"]:
-        galaxy = {
-            "title": item["data"][0]["title"],
-            "description": item["data"][0]["description"],
-            "image_url": item["links"][0]["href"]
-        }
-        galaxies.append(galaxy)
+#     galaxies = []
+#     for item in data["collection"]["items"]:
+#         galaxy = {
+#             "title": item["data"][0]["title"],
+#             "description": item["data"][0]["description"],
+#             "image_url": item["links"][0]["href"]
+#         }
+#         galaxies.append(galaxy)
 
-    # Return the first galaxy that matches the name
-    for galaxy in galaxies:
-        if galaxy["title"].lower() == galaxy_name.lower():
-            return galaxy
-
-    # If no galaxy matches the name, return an error message
-    return {'error': 'No galaxy found with the given name.'}
-
+#     return galaxies
 @app.route('/exoplanets', methods=['GET'])
-def get_exoplanets():
+def get_random_exoplanet():
     url = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+top+300+*+from+ps+where+tran_flag=1+order+by+pl_name+asc"
 
     response = requests.get(url)
@@ -94,7 +87,9 @@ def get_exoplanets():
     # Remove duplicate exoplanets
     exoplanets = [exoplanet for i, exoplanet in enumerate(exoplanets) if exoplanets.index(exoplanet) == i]
 
-    return jsonify(exoplanets)
+    # Return a random exoplanet
+    print("higigiigig")
+    return exoplanets
 
 @app.route('/galaxies', methods=['GET'])
 def get_galaxies():
@@ -118,18 +113,18 @@ def get_galaxies():
         }
         galaxies.append(galaxy)
 
-    return jsonify(galaxies)
+    return galaxies
 
 @app.route('/', methods=['GET'])
 def get_random_detail():
     detail_type = random.choice(['exoplanet', 'galaxy'])
 
     if detail_type == 'exoplanet':
-        exoplanet_name = random.choice(get_exoplanets().json)["planet_name"]
-        return jsonify(extract_exoplanet_details(exoplanet_name))
+        exo = get_random_exoplanet()
+        return jsonify(random.choice(exo))
     elif detail_type == 'galaxy':
-        galaxy_name = random.choice(get_galaxies().json)["title"]
-        return jsonify({"galaxy": get_galaxy_details(galaxy_name)})
+        galaxies = get_galaxies()
+        return jsonify(random.choice(galaxies))
 
 if __name__ == "__main__":
     app.run(debug=True)
