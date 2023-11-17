@@ -15,7 +15,7 @@ def extract_exoplanet_details(exoplanet_name):
     try:
         response = requests.get(url)
         if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'html.parser')
+            soup = BeautifulSoup(response.content, 'html.parser')
 
             description_element = soup.find("b", text=exoplanet_name)
             if description_element:
@@ -65,6 +65,7 @@ def get_random_exoplanet():
 
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
+
 
     rows = soup.find_all('tr')
     exoplanets = []
