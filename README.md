@@ -37,6 +37,7 @@ This API offers a simple way to retrieve random details about exoplanets and gal
 ### Endpoints
 
 #### `/shuffle`
+#### `https://apiexoplanet.azurewebsites.net/shuffle`
 
 - **Method:** `GET`
 - **Description:** Returns a random item from either the exoplanets or galaxies list.
