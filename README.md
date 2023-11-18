@@ -36,14 +36,71 @@ This API offers a simple way to retrieve random details about exoplanets and gal
 
 ### Endpoints
 
-#### `/shuffle`
-#### `https://apiexoplanet.azurewebsites.net/shuffle`
+
+#### `https://apiexoplanet.azurewebsites.net/endpoints`
 
 - **Method:** `GET`
 - **Description:** Returns a random item from either the exoplanets or galaxies list.
 - **Details:**
   - Items are not repeated in the first 20 requests.
   - The API internally maintains a list of recently returned items to ensure uniqueness.
+
+
+
+### `/shuffle`
+
+- **Method:** GET
+- **Description:** Returns details of a randomly selected exoplanet or galaxy. The selection is not repeated in the first 20 calls to maintain variety.
+- **Response:**
+  ```json
+  {
+    "name": "Planet X",
+    "description": "A fascinating exoplanet with...",
+    "image_url": "https://example.com/planet_x.jpg",
+    // Other details specific to exoplanets or galaxies
+  }
+  ```
+
+### `/exoplanets`
+
+- **Method:** GET
+- **Description:** Returns the entire list of exoplanets.
+- **Response:**
+  ```json
+  {
+    "data": [
+      {
+        "name": "Planet A",
+        "description": "A description of Planet A...",
+        "image_url": "https://example.com/planet_a.jpg",
+        // Other details specific to exoplanets
+      },
+      // ... more exoplanets
+    ]
+  }
+  ```
+
+### `/galaxies`
+
+- **Method:** GET
+- **Description:** Returns the entire list of galaxies.
+- **Response:**
+  ```json
+  {
+    "data": [
+      {
+        "title": "Galaxy B",
+        "nasa_id": "PIA12345",
+        "date_created": "2022-01-01T00:00:00Z",
+        "short_description": "A short description of Galaxy B...",
+        "description": "A detailed description of Galaxy B...",
+        "image_url": "https://example.com/galaxy_b.jpg"
+      },
+      // ... more galaxies
+    ]
+  }
+  ```
+
 
 ## Project Structure
 
@@ -69,3 +126,5 @@ This API offers a simple way to retrieve random details about exoplanets and gal
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
