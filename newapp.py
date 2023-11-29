@@ -24,16 +24,5 @@ def shuffle():
             recent_items.append(item)
             return jsonify(data=item)
 
-@app.route('/exoplanets', methods=['GET'])
-def get_exoplanets():
-    exoplanet = random.choice(exoplanets)
-    return jsonify(data=exoplanet)
-
-@app.route('/galaxies', methods=['GET'])
-def get_galaxies():
-    galaxy = random.choice(galaxies)
-    return jsonify(data=galaxy)
-
-
 if __name__ == '__main__':
     app.run(debug=True)
